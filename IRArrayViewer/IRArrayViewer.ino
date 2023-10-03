@@ -17,10 +17,12 @@ void readline() {
   Serial.print(a[4]);
 
   //Prints target reading
+  /*
  int v;
   v = (4000*a[0] + 3000*a[1] + 2000*a[2] + 1000*a[3] + 0*a[4])/(a[0] + a[1] + a[2] + a[3] + a[4]);
-Serial.print(“Position = “);
+  Serial.print(“Position = “);
   Serial.println(v);
   return v;
 }
+*/
 }
