@@ -4,14 +4,19 @@
 #define Kd 0 //D value in PID
 #define L_MOTOR 6 //Left motor pin
 #define R_MOTOR 7  //Right motor pin
-#define MAX_SPEED 150 //Max speed to set motors
-#define TARGET_SPEED 100  //Target speed to set motors to
-#define MIN_SPEED 0 //Minimum speed to set motors to
+#define maxSPEED 150 //Max speed to set motors
+#define targetSPEED 100  //Target speed to set motors to
+#define minSPEED -150 //Minimum speed to set motors to
 #define NUM_SENSORS 5 //Number of IR sensors
 
-int IR_data[NUM_SENSORS]; //store IR array data
+int irData[NUM_SENSORS]; //store IR array data
 
 int lastError  = 0; //stores last error found from PID
+
+int lmSpeed = 0;
+int rmSpeed = 0;
+int irAverage = 0;
+int irSum = 0;
 
 bool start = true;
 
@@ -27,19 +32,48 @@ void loop() {
 
     //Cycle through sensors and assigns them to array. Left to right
     for (int i = 0; i <= NUM_SENSORS; i++){
-      IR_data[i] = int(analogRead[i]);
+      irData[i] = int(analogRead[i]);
+      int irAverage = irData[i] * i * 1000;   //weighted mean   
+      int irSum = int(irData[i]);
     }
+
+    int position = int(irAverage / irSum);
 
     //PID calculations
     int error = TARGET - position; //determine deviation form target position
-    P = error;
-    I = I + error;
-    D = error - lastError;
+    int p = error;
+    int i = Ki + error;
+    int d = error - lastError;
     lastError = error;  //Save last error for next iteration
-    int adjustSpeed  = P*K_P + I*K_I + D*K_D
+    int adjustSpeed  = p*Kp + i*Ki + d*Kd;
+
+    lmSpeed = targetSPEED + adjustSpeed;
+    rmSpeed = targetSPEED - adjustSpeed;
+
+    //Assure motor speed is not leaving limits of motor function
+    if (lmSpeed > maxSPEED) {
+      lmSpeed = maxSPEED;
+    }
+
+    if (lmSpeed < minSPEED) {
+      lmSpeed = minSPEED;
+    }
+
+    if (rmSpeed > maxSPEED) {
+      rmSpeed = maxSPEED;
+    }
+
+    if (rmSpeed < minSPEED) {
+      rmSpeed = minSPEED;
+    } 
+  
+  analogWrite(L_MOTOR, lmSpeed);
+  analogWrite(R_MOTOR, rmSpeed);
   }
+
   else {
     //Stop motors
-    analogWrite(L_MOTOR, 0)
-    analogWrite(R_MOTOR, 0)
+    analogWrite(L_MOTOR, 0);
+    analogWrite(R_MOTOR, 0);
+  }
 }
