@@ -31,7 +31,7 @@ void loop() {
   if (start == true) { //will stop program if end condition is met
 
     //Cycle through sensors and assigns them to array. Left to right
-    for (int i = 0; i <= NUM_SENSORS; i++){
+    for (int i = 0; i < NUM_SENSORS; i++){
       irData[i] = int(analogRead[i]);
       int irAverage = irData[i] * i * 1000;   //weighted mean   
       int irSum = int(irData[i]);
