@@ -6,19 +6,19 @@ Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 Adafruit_DCMotor *leftMotor = AFMS.getMotor(3); // we are using M3
 Adafruit_DCMotor *rightMotor = AFMS.getMotor(1); // we are using M1
 
-#define TARGET    //Target IR reading for center sensor
+#define TARGET  2031  //Target IR reading for center sensor
 #define Kp 0 //P value in PID
 #define Ki  0 //I value in PID
 #define Kd 0 //D value in PID
-#define L_MOTOR 6 //Left motor pin
-#define R_MOTOR 7  //Right motor pin
+#define lMOTOR 6 //Left motor pin
+#define rMOTOR 7  //Right motor pin
 #define maxSPEED 150 //Max speed to set motors
 #define targetSPEED 100  //Target speed to set motors to
 #define minSPEED -150 //Minimum speed to set motors to
-#define NUM_SENSORS 5 //Number of IR sensors
-#define stopVALUE 5000 //Value of IR sensors at finish line
+#define numSENSORS 5 //Number of IR sensors
+#define stopVALUE 4550 //Value of IR sensors at finish line
 
-int irData[NUM_SENSORS]; //store IR array data
+int irData[numSENSORS]; //store IR array data
 
 int lastError  = 0; //stores last error found from PID
 
@@ -39,8 +39,8 @@ boolean newData = false;
 void setup() {
   AFMS.begin();
   // Initialize Pins
-  pinMode(L_MOTOR, OUTPUT);
-  pinMode(R_MOTOR, OUTPUT);
+  pinMode(lMOTOR, OUTPUT);
+  pinMode(rMOTOR, OUTPUT);
   Serial.begin(9600); //Start  serial
 
   leftMotor->setSpeed(lmSpeed); // initialise the speed + direction for left
@@ -109,10 +109,10 @@ void loop() {
     int irSum = 0;
 
     //Cycle through sensors and assigns them to array. Left to right
-    for (int i = 0; i < NUM_SENSORS; i++){
-      irData[i] = int(analogRead(i));
+    for (int i = 0; i < numSENSORS; i++){
+      irData[i] = analogRead(i);
       irAverage += irData[i] * i * 1000;   //weighted mean   
-      irSum += int(irData[i]);
+      irSum += irData[i];
     }
     if (irSum >= stopVALUE) { //checks to see if sensors are over finish line
       start = false; //swips loop condition switch
