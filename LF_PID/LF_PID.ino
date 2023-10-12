@@ -31,6 +31,11 @@ int irSum = 0;
 
 bool start = true;
 
+//Serial control setup
+const byte numChars = 32;
+char receivedChars[numChars];   // an array to store the received data
+boolean newData = false;
+
 void setup() {
   AFMS.begin();
   // Initialize Pins
@@ -44,9 +49,60 @@ void setup() {
   rightMotor->setSpeed(rmSpeed);  // initialise the speed + direction for motor one
   rightMotor->run(rmDirection);
 
+  Serial.print("<Arduino is ready>");
+  Serial.println("<Valid Commands: <START>, <STOP>");
 }
 
 void loop() {
+  //Proccessing received serial input
+  static boolean recvInProgress = false;
+  static byte ndx = 0;
+  char startMarker = '<';
+  char endMarker = '>';
+  char rc;
+    
+  while (Serial.available() > 0 && newData == false) {
+      rc = Serial.read();
+
+      if (recvInProgress == true) {
+          if (rc != endMarker) {
+              receivedChars[ndx] = rc;
+              ndx++;
+              if (ndx >= numChars) {
+                  ndx = numChars - 1;
+              }
+          }
+          else {
+              receivedChars[ndx] = '\0'; // terminate the string
+              recvInProgress = false;
+              ndx = 0;
+              newData = true;
+          }
+      }
+
+      else if (rc == startMarker) {
+          recvInProgress = true;
+      }
+  }
+  //Show condition being applied to LF program and prints to serial
+  if (newData == true) {
+        Serial.print("Command: ");
+        Serial.println(receivedChars);
+        String command = String(receivedChars);
+
+        if (command == "STOP") {
+          start = false;
+        }
+        else if (command == "START") {
+          start = true;
+        }
+        else {
+          Serial.println("Invalid Command");
+          
+        }
+        newData = false;
+  }
+  //Line follower loop begins
   if (start == true) { //will stop program if end condition is met
 
     int irAverage = 0;
