@@ -76,7 +76,7 @@ void loop() {
               receivedChars[ndx] = '\0'; // terminate the string
               recvInProgress = false;
               ndx = 0;
-              newData = true;
+              newData = true;>
           }
       }
 
@@ -163,21 +163,39 @@ void loop() {
       rmSpeed = minSPEED;
     } 
   
-  //analogWrite(L_MOTOR, lmSpeed);
-  leftMotor->setSpeed(lmSpeed);
-  leftMotor->run(lmDirection);
+    //analogWrite(L_MOTOR, lmSpeed);
+    leftMotor->setSpeed(abs(lmSpeed));
+    leftMotor->run(lmDirection);
 
-  //analogWrite(R_MOTOR, rmSpeed);
-  rightMotor->setSpeed(rmSpeed);
-  rightMotor->run(rmDirection);
+    //analogWrite(R_MOTOR, rmSpeed);
+    rightMotor->setSpeed(abs(rmSpeed));
+    rightMotor->run(rmDirection);
+
+    //Data to serial for graphing in python
+    for (int i = 0; i < numSENSORS; i++){
+      //Serial.println(analogRead(i));
+      Serial.print(irData[i]);
+      Serial.print(",");
+    }
+    Serial.print(lmSpeed);
+    Serial.print(",");
+    Serial.println(rmSpeed);
+    
   }
 
   else {
     //Stop motors
-  //analogWrite(L_MOTOR, 0);
+    //analogWrite(L_MOTOR, 0);
     leftMotor->run(RELEASE);
     //analogWrite(R_MOTOR, 0);
     rightMotor->run(RELEASE);
-
+    for (int i = 0; i < numSENSORS; i++){
+      //Serial.println(analogRead(i));
+      Serial.print(irData[i]);
+      Serial.print(",");
+    }
+    Serial.print(lmSpeed);
+    Serial.print(",");
+    Serial.println(rmSpeed);
   }
 }
