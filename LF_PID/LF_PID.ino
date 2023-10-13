@@ -76,7 +76,7 @@ void loop() {
               receivedChars[ndx] = '\0'; // terminate the string
               recvInProgress = false;
               ndx = 0;
-              newData = true;>
+              newData = true;
           }
       }
 
@@ -104,7 +104,7 @@ void loop() {
   }
   //Line follower loop begins
   if (start == true) { //will stop program if end condition is met
-
+    //Serial.print("Start if");
     int irAverage = 0;
     int irSum = 0;
 
@@ -134,19 +134,24 @@ void loop() {
 
     //Determine motor direction depending on speed
     if (lmSpeed >= 0) {
-      lmDirection = FORWARD;
+      //lmDirection = FORWARD;
+      lmSpeed = HIGH;
     }
     else {
-      lmDirection = BACKWARD;
+      //lmDirection = BACKWARD;
+      lmSpeed = LOW;
     }
     if (rmSpeed >= 0) {
-      rmDirection = FORWARD;
+      //rmDirection = FORWARD;
+      rmSpeed = HIGH;
     }
     else {
-      rmDirection = BACKWARD;
+      //rmDirection = BACKWARD;
+      rmSpeed = LOW;
     }
 
     //Assure motor speed is not leaving limits of motor function
+    /*
     if (lmSpeed > maxSPEED) {
       lmSpeed = maxSPEED;
     }
@@ -162,15 +167,16 @@ void loop() {
     if (rmSpeed < minSPEED) {
       rmSpeed = minSPEED;
     } 
-  
+    */
     //analogWrite(L_MOTOR, lmSpeed);
-    leftMotor->setSpeed(abs(lmSpeed));
-    leftMotor->run(lmDirection);
+   // leftMotor->setSpeed(abs(lmSpeed));
+    //leftMotor->run(lmDirection);
+    digitalWrite(lMOTOR, 255);
 
     //analogWrite(R_MOTOR, rmSpeed);
-    rightMotor->setSpeed(abs(rmSpeed));
-    rightMotor->run(rmDirection);
-
+   // rightMotor->setSpeed(abs(rmSpeed));
+   // rightMotor->run(rmDirection);
+    
     //Data to serial for graphing in python
     for (int i = 0; i < numSENSORS; i++){
       //Serial.println(analogRead(i));
@@ -184,11 +190,13 @@ void loop() {
   }
 
   else {
+    //Serial.print("Else start");
     //Stop motors
     //analogWrite(L_MOTOR, 0);
     leftMotor->run(RELEASE);
     //analogWrite(R_MOTOR, 0);
     rightMotor->run(RELEASE);
+    /*
     for (int i = 0; i < numSENSORS; i++){
       //Serial.println(analogRead(i));
       Serial.print(irData[i]);
@@ -197,5 +205,6 @@ void loop() {
     Serial.print(lmSpeed);
     Serial.print(",");
     Serial.println(rmSpeed);
+    */
   }
 }
