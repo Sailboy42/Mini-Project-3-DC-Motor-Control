@@ -4,8 +4,8 @@
 
 // Setting up Motorshield
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
-Adafruit_DCMotor *leftMotor = AFMS.getMotor(3); // we are using M3 port
-Adafruit_DCMotor *rightMotor = AFMS.getMotor(1); // we are using M1 port
+Adafruit_DCMotor *leftMotor = AFMS.getMotor(1); // we are using M3 port
+Adafruit_DCMotor *rightMotor = AFMS.getMotor(4); // we are using M1 port
 
 
 #define leftSensor  A2 
@@ -13,7 +13,7 @@ Adafruit_DCMotor *rightMotor = AFMS.getMotor(1); // we are using M1 port
 #define rightSensor  A0     // sensors defined
 #define L_MOTOR 6 //Left motor pin
 #define R_MOTOR 7  //Right motor pin
-#define threshold 400
+#define threshold 850
 
 
 void setup() {
