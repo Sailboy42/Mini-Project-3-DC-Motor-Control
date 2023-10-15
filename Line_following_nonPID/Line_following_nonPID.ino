@@ -14,7 +14,8 @@ Adafruit_DCMotor *rightMotor = AFMS.getMotor(2); // we are using M1 port
 #define L_MOTOR 6 //Left motor pin
 #define R_MOTOR 7  //Right motor pin
 #define threshold 850
-
+#define motor_speed 30
+int lastAction = 0;
 
 void setup() {
   AFMS.begin(); // initialise adafruit library
@@ -27,11 +28,11 @@ void setup() {
   Serial.begin(9600); //Start serial
   
   // set motor sppeds and directions
-  leftMotor->setSpeed(50); // initialise the speed + direction for left
-  leftMotor->run(FORWARD);
+  leftMotor->setSpeed(30); // initialise the speed + direction for left
+  leftMotor->run(BACKWARD);
 
-  rightMotor->setSpeed(50);  // initialise the speed + direction for motor right
-  rightMotor->run(FORWARD);
+  rightMotor->setSpeed(30);  // initialise the speed + direction for motor right
+  rightMotor->run(BACKWARD);
 }
 
 
@@ -48,53 +49,57 @@ Serial.println((String)" left: "+leftValue+" center: "+centerValue+" right: "+ri
 // if side sensors detect floor and middle detects tape move forward
 if ((leftValue < threshold) && (centerValue > threshold) && (rightValue < threshold)) {
   // Go forward
-  leftMotor->setSpeed(50);
-  //digitalWrite(leftMotor, HIGH);
-  rightMotor->setSpeed(50);
-  //digitalWrite(leftMotor, HIGH);
+  leftMotor->setSpeed(30);
+  rightMotor->setSpeed(30);
+  lastAction = 0;
 }
 // If left sensor senses tape and center & left don't
 if ((leftValue > threshold) && (centerValue < threshold) && (rightValue < threshold)){
   // turn right
-  leftMotor->run(FORWARD);
-  rightMotor->run(BACKWARD);
+  leftMotor->run(BACKWARD);
+  rightMotor->run(FORWARD);
   leftMotor->setSpeed(25);
   rightMotor->setSpeed(25);
+  lastAction = 1;
 
 }
 // If right sensor senses tape and the others don't
 if ((leftValue < threshold) && (centerValue < threshold) && (rightValue > threshold)){
   // turn left
-  leftMotor->run(BACKWARD);
-  rightMotor->run(FORWARD);
+  leftMotor->run(FORWARD);
+  rightMotor->run(BACKWARD);
   leftMotor->setSpeed(25);
   rightMotor->setSpeed(25);
+  lastAction = 2;
 }
 // if no sensors sense tape
 if ((leftValue < threshold) && (centerValue < threshold) && (rightValue < threshold)) {
   // stop
       //analogWrite(L_MOTOR, 0);
-    leftMotor->run(RELEASE);
+    leftMotor->run(BACKWARD);
+    leftMotor->setSpeed(25);
     //analogWrite(R_MOTOR, 0);
-    rightMotor->run(RELEASE);
+    rightMotor->run(BACKWARD);
+    rightMotor->setSpeed(25);
+    lastAction = 3;
 }
 
 // Turning situation
 
-if ((leftValue < threshold)&& (centerValue< threshold)&& (rightValue > threshold)){
+//if ((leftValue < threshold)&& (centerValue< threshold)&& (rightValue > threshold)){
   //power right
-  leftMotor->run(FORWARD);
-  rightMotor->run(BACKWARD);
-  leftMotor->setSpeed(25);
-  rightMotor->setSpeed(25);
-}
-if ((leftValue > threshold)&& (centerValue < threshold)&& (rightValue < threshold)){
+ // leftMotor->run(FORWARD);
+ // rightMotor->run(BACKWARD);
+//  leftMotor->setSpeed(25);
+ // rightMotor->setSpeed(25);
+//}
+//if ((leftValue > threshold)&& (centerValue < threshold)&& (rightValue < threshold)){
   //power left
-  leftMotor->run(BACKWARD);
-  rightMotor->run(FORWARD);
-  leftMotor->setSpeed(25);
-  rightMotor->setSpeed(25);
-}
+//  leftMotor->run(BACKWARD);
+//  rightMotor->run(FORWARD);
+//  leftMotor->setSpeed(25);
+//  rightMotor->setSpeed(25);
+//}
 
 
 }
