@@ -35,8 +35,6 @@ void setup() {
   rightMotor->run(BACKWARD);
 }
 
-
-
 void loop() {
   // put your main code here, to run repeatedly:
 int leftValue = analogRead(leftSensor); // sensor values
@@ -94,6 +92,18 @@ if ((leftValue < threshold) && (centerValue > threshold) && (rightValue > thresh
 // if no sensors sense tape
 if ((leftValue < threshold) && (centerValue < threshold) && (rightValue < threshold)) {
   // stop
+  if (lastAction == 1){
+    leftMotor->run(BACKWARD);
+    rightMotor->run(FORWARD);
+    leftMotor->setSpeed(25);
+    rightMotor->setSpeed(25);
+  }
+  if (lastAction == 2){
+    leftMotor->run(FORWARD);
+    rightMotor->run(BACKWARD);
+    leftMotor->setSpeed(25);
+    rightMotor->setSpeed(25);
+  }
       //analogWrite(L_MOTOR, 0);
   leftMotor->run(BACKWARD);
   leftMotor->setSpeed(25);
@@ -103,34 +113,6 @@ if ((leftValue < threshold) && (centerValue < threshold) && (rightValue < thresh
   lastAction = 3;
 
 }
-if ((leftValue > threshold) && (centerValue > threshold) && (rightValue > threshold)) {
-  // stop
-      //analogWrite(L_MOTOR, 0);
-  leftMotor->run(BACKWARD);
-  leftMotor->setSpeed(0);
-  rightMotor->run(BACKWARD);
-  rightMotor->setSpeed(0);
-  lastAction = 4;
-
-}
-// Turning situation
-
-//if ((leftValue < threshold)&& (centerValue< threshold)&& (rightValue > threshold)){
-  //power right
- // leftMotor->run(FORWARD);
- // rightMotor->run(BACKWARD);
-//  leftMotor->setSpeed(25);
- // rightMotor->setSpeed(25);
-//}
-//if ((leftValue > threshold)&& (centerValue < threshold)&& (rightValue < threshold)){
-  //power left
-//  leftMotor->run(BACKWARD);
-//  rightMotor->run(FORWARD);
-//  leftMotor->setSpeed(25);
-//  rightMotor->setSpeed(25);
-//}
-
-
 }
 
 
