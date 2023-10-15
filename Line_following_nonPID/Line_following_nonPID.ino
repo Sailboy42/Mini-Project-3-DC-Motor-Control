@@ -74,7 +74,7 @@ if ((leftValue < threshold) && (centerValue < threshold) && (rightValue > thresh
 }
 
 // if middle and left sensor sense tape
-if ((leftValue > threshold) && (centerValue > threshold) && (rightValue < threshold))
+if ((leftValue > threshold) && (centerValue > threshold) && (rightValue < threshold)){
   leftMotor->run(BACKWARD);
   rightMotor->run(FORWARD);
   leftMotor->setSpeed(25);
@@ -82,7 +82,7 @@ if ((leftValue > threshold) && (centerValue > threshold) && (rightValue < thresh
   lastAction = 1;
 }
 
-if ((leftValue < threshold) && (centerValue > threshold) && (rightValue > threshold))
+if ((leftValue < threshold) && (centerValue > threshold) && (rightValue > threshold)){
   leftMotor->run(FORWARD);
   rightMotor->run(BACKWARD);
   leftMotor->setSpeed(25);
