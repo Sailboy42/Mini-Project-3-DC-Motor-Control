@@ -6,6 +6,7 @@ from ImportSave import serial2_csv
 
 serial2_csv(arduino_com_port="COM4", file_path="line_follower_data.csv")
 
+# read csv and assign names
 lf_df = pd.read_csv(
     "line_follower_data.csv",
     header=0,
@@ -28,9 +29,11 @@ lf_df = {
 }
 """
 
+##Plotting
 fig, ax = plt.subplots()
 fig.subplots_adjust(right=0.75)
 
+# second y axis
 twin = ax.twinx()
 
 (p1,) = ax.plot(lf_df["time"], lf_df["ir_1"], "c-", label="IR_1")
