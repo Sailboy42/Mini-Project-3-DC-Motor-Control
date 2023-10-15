@@ -72,16 +72,34 @@ if ((leftValue < threshold) && (centerValue < threshold) && (rightValue > thresh
   rightMotor->setSpeed(25);
   lastAction = 2;
 }
+
+// if middle and left sensor sense tape
+if ((leftValue > threshold) && (centerValue > threshold) && (rightValue < threshold))
+  leftMotor->run(BACKWARD);
+  rightMotor->run(FORWARD);
+  leftMotor->setSpeed(25);
+  rightMotor->setSpeed(25);
+  lastAction = 1;
+}
+
+if ((leftValue < threshold) && (centerValue > threshold) && (rightValue > threshold))
+  leftMotor->run(FORWARD);
+  rightMotor->run(BACKWARD);
+  leftMotor->setSpeed(25);
+  rightMotor->setSpeed(25);
+  lastAction = 2;
+}
 // if no sensors sense tape
 if ((leftValue < threshold) && (centerValue < threshold) && (rightValue < threshold)) {
   // stop
       //analogWrite(L_MOTOR, 0);
-    leftMotor->run(BACKWARD);
-    leftMotor->setSpeed(25);
-    //analogWrite(R_MOTOR, 0);
-    rightMotor->run(BACKWARD);
-    rightMotor->setSpeed(25);
-    lastAction = 3;
+  leftMotor->run(BACKWARD);
+  leftMotor->setSpeed(25);
+  //analogWrite(R_MOTOR, 0);
+  rightMotor->run(BACKWARD);
+  rightMotor->setSpeed(25);
+  lastAction = 3;
+
 }
 
 // Turning situation
