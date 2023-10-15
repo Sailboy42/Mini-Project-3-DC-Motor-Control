@@ -4,8 +4,8 @@
 
 // Setting up Motorshield
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
-Adafruit_DCMotor *leftMotor = AFMS.getMotor(1); // we are using M3 port
-Adafruit_DCMotor *rightMotor = AFMS.getMotor(4); // we are using M1 port
+Adafruit_DCMotor *leftMotor = AFMS.getMotor(3); // we are using M3 port
+Adafruit_DCMotor *rightMotor = AFMS.getMotor(2); // we are using M1 port
 
 
 #define leftSensor  A2 
@@ -30,7 +30,7 @@ void setup() {
   leftMotor->setSpeed(50); // initialise the speed + direction for left
   leftMotor->run(FORWARD);
 
-  rightMotor->setSpeed(50);  // initialise the speed + direction for motor one
+  rightMotor->setSpeed(50);  // initialise the speed + direction for motor right
   rightMotor->run(FORWARD);
 }
 
@@ -41,6 +41,8 @@ void loop() {
 int leftValue = analogRead(leftSensor); // sensor values
 int centerValue = analogRead(centerSensor);
 int rightValue = analogRead(rightSensor);
+Serial.println((String)" left: "+leftValue+" center: "+centerValue+" right: "+rightValue);
+
 
 
 // if side sensors detect floor and middle detects tape move forward
@@ -83,25 +85,17 @@ if ((leftValue < threshold)&& (centerValue< threshold)&& (rightValue > threshold
   //power right
   leftMotor->run(FORWARD);
   rightMotor->run(BACKWARD);
-  leftMotor->setSpeed(50);
-  rightMotor->setSpeed(50);
+  leftMotor->setSpeed(25);
+  rightMotor->setSpeed(25);
 }
 if ((leftValue > threshold)&& (centerValue < threshold)&& (rightValue < threshold)){
   //power left
   leftMotor->run(BACKWARD);
   rightMotor->run(FORWARD);
-  leftMotor->setSpeed(50);
-  rightMotor->setSpeed(50);
+  leftMotor->setSpeed(25);
+  rightMotor->setSpeed(25);
 }
 
-else {
-  // sensors don't have any value
-  Serial.print("Sensors aren't working");
-    //analogWrite(L_MOTOR, 0);
-    //leftMotor->run(RELEASE);
-    //analogWrite(R_MOTOR, 0);
-    //rightMotor->run(RELEASE);
-}
 
 }
 
