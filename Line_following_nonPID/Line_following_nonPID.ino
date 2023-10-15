@@ -175,21 +175,22 @@ if (start == false) {
   rightMotor->setSpeed(0);
   lastAction = 4;
 }
-
-//Send data over serial
 /*
-int currentTime = millis() - startTime;
-Serial.print(leftValue);
-Serial.print(",");
-Serial.print(centerValue);
-Serial.print(",");
-Serial.print();
-Serial.print(",");
-Serial.print(lmSpeed);
-Serial.print(",");
-Serial.print(rmSpeed);
-Serial.print(",");
-Serial.println(currentTime);
+if (start == true) {
+  //Send data over serial
+  int currentTime = millis() - startTime;
+  Serial.print(leftValue);
+  Serial.print(",");
+  Serial.print(centerValue);
+  Serial.print(",");
+  Serial.print();
+  Serial.print(",");
+  Serial.print(lmSpeed);
+  Serial.print(",");
+  Serial.print(rmSpeed);
+  Serial.print(",");
+  Serial.println(currentTime);
+}
 */
 
 // Turning situation
