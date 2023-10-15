@@ -46,9 +46,9 @@ void setup() {
   Serial.println("<Valid Commands: <START>, <STOP>");
 }
 
-
-
 void loop() {
+  int startTime = millis();
+
   //Proccessing received serial input
   static boolean recvInProgress = false;
   static byte ndx = 0;
@@ -178,15 +178,18 @@ if (start == false) {
 
 //Send data over serial
 /*
+int currentTime = millis() - startTime;
 Serial.print(leftValue);
 Serial.print(",");
 Serial.print(centerValue);
 Serial.print(",");
-Serial.print(rightValue);
+Serial.print();
 Serial.print(",");
 Serial.print(lmSpeed);
 Serial.print(",");
-Serial.println(rmSpeed);
+Serial.print(rmSpeed);
+Serial.print(",");
+Serial.println(currentTime);
 */
 
 // Turning situation
