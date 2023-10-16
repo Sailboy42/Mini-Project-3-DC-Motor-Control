@@ -105,7 +105,7 @@ void loop() {
 int leftValue = analogRead(leftSensor); // sensor values
 int centerValue = analogRead(centerSensor);
 int rightValue = analogRead(rightSensor);
-Serial.println((String)leftValue+","+centerValue+","+rightValue+ ","+ speedLeft+","+speedRight);
+Serial.println((String)leftValue+","+centerValue+","+rightValue+ ","+ speedLeft+","+speedRight+","+ startTime);
 
 
 
