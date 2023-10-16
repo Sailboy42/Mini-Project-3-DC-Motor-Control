@@ -206,22 +206,6 @@ if (start == true) {
 }
 */
 
-// Turning situation
-
-//if ((leftValue < threshold)&& (centerValue< threshold)&& (rightValue > threshold)){
-  //power right
- // leftMotor->run(FORWARD);
- // rightMotor->run(BACKWARD);
-//  leftMotor->setSpeed(25);
- // rightMotor->setSpeed(25);
-//}
-//if ((leftValue > threshold)&& (centerValue < threshold)&& (rightValue < threshold)){
-  //power left
-//  leftMotor->run(BACKWARD);
-//  rightMotor->run(FORWARD);
-//  leftMotor->setSpeed(25);
-//  rightMotor->setSpeed(25);
-//}
 
 
 }
