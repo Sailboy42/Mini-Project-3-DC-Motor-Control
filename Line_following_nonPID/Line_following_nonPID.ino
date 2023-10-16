@@ -16,6 +16,7 @@ Adafruit_DCMotor *rightMotor = AFMS.getMotor(2); // we are using M1 port
 #define threshold 850
 #define motor_speed 30
 int lastAction = 0;
+int motorSpeed = 25;
 
 bool start = true;
 
@@ -117,8 +118,8 @@ if ((leftValue > threshold) && (centerValue < threshold) && (rightValue < thresh
   // turn right
   leftMotor->run(BACKWARD);
   rightMotor->run(FORWARD);
-  leftMotor->setSpeed(25);
-  rightMotor->setSpeed(25);
+  leftMotor->setSpeed(motorSpeed);
+  rightMotor->setSpeed(motorSpeed);
   lastAction = 1;
 
 }
@@ -127,8 +128,8 @@ if ((leftValue < threshold) && (centerValue < threshold) && (rightValue > thresh
   // turn left
   leftMotor->run(FORWARD);
   rightMotor->run(BACKWARD);
-  leftMotor->setSpeed(25);
-  rightMotor->setSpeed(25);
+  leftMotor->setSpeed(motorSpeed);
+  rightMotor->setSpeed(motorSpeed);
   lastAction = 2;
 }
 
@@ -136,8 +137,8 @@ if ((leftValue < threshold) && (centerValue < threshold) && (rightValue > thresh
 if ((leftValue > threshold) && (centerValue > threshold) && (rightValue < threshold)){
   leftMotor->run(BACKWARD);
   rightMotor->run(FORWARD);
-  leftMotor->setSpeed(25);
-  rightMotor->setSpeed(25);
+  leftMotor->setSpeed(motorSpeed);
+  rightMotor->setSpeed(motorSpeed);
   lastAction = 1;
   delay(200);
 }
@@ -145,8 +146,8 @@ if ((leftValue > threshold) && (centerValue > threshold) && (rightValue < thresh
 if ((leftValue < threshold) && (centerValue > threshold) && (rightValue > threshold)){
   leftMotor->run(FORWARD);
   rightMotor->run(BACKWARD);
-  leftMotor->setSpeed(25);
-  rightMotor->setSpeed(25);
+  leftMotor->setSpeed(motorSpeed);
+  rightMotor->setSpeed(motorSpeed);
   lastAction = 2;
   delay(200);
 }
@@ -156,21 +157,21 @@ if ((leftValue < threshold) && (centerValue < threshold) && (rightValue < thresh
   if (lastAction == 1){
     leftMotor->run(BACKWARD);
     rightMotor->run(FORWARD);
-    leftMotor->setSpeed(25);
-    rightMotor->setSpeed(25);
+    leftMotor->setSpeed(motorSpeed);
+    rightMotor->setSpeed(motorSpeed);
   }
   if (lastAction == 2){
     leftMotor->run(FORWARD);
     rightMotor->run(BACKWARD);
-    leftMotor->setSpeed(25);
-    rightMotor->setSpeed(25);
+    leftMotor->setSpeed(motorSpeed);
+    rightMotor->setSpeed(motorSpeed);
   }
       //analogWrite(L_MOTOR, 0);
   leftMotor->run(BACKWARD);
-  leftMotor->setSpeed(25);
+  leftMotor->setSpeed(motorSpeed);
   //analogWrite(R_MOTOR, 0);
   rightMotor->run(BACKWARD);
-  rightMotor->setSpeed(25);
+  rightMotor->setSpeed(motorSpeed);
   lastAction = 3;
 
 }
