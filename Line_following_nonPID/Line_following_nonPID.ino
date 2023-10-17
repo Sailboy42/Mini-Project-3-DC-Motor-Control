@@ -106,10 +106,10 @@ void loop() {
   }
 
   // Line Follower Loop
-  int leftValue = analogRead(leftSensor);  // sensor values
-  int centerValue = analogRead(centerSensor);
-  int rightValue = analogRead(rightSensor);
-  Serial.println((String)leftValue + "," + centerValue + "," + rightValue + "," + speedLeft + "," + speedRight + "," + startTime);
+int leftValue = analogRead(leftSensor); // sensor values
+int centerValue = analogRead(centerSensor);
+int rightValue = analogRead(rightSensor);
+Serial.println((String)leftValue+","+centerValue+","+rightValue+ ","+ speedLeft+","+speedRight+","+ startTime);
 
   // if side sensors detect floor and middle detects tape move forward
   if ((leftValue < threshold) && (centerValue > threshold) && (rightValue < threshold)) {
