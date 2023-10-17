@@ -1,14 +1,17 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from ImportSave import serial2_csv
+
+# from ImportSave import serial2_csv
 
 # import numpy as np
 
-serial2_csv(arduino_com_port="COM4", file_path="line_follower_data.csv")
+# serial2_csv(arduino_com_port="COM4", file_path="line_follower_data.csv")
+# file=open(one_d_scan.csv, "r")
+# reader = csv
 
 # read csv and assign names
 lf_df = pd.read_csv(
-    "line_follower_data.csv",
+    "line_data_fixed.csv",
     header=0,
     names=["ir_1", "ir_2", "ir_3", "left_motor", "right_motor", "time"],
 )
@@ -28,7 +31,7 @@ lf_df = {
     "right_motor": [0.6, 0.7, 0.8, 0.9, 1.0],
 }
 """
-
+lf_df = lf_df.iloc[1850:1950]
 ##Plotting
 fig, ax = plt.subplots()
 fig.subplots_adjust(right=0.75)
@@ -46,6 +49,8 @@ ax.set_xlabel("Time")
 ax.set_ylabel("IR Value(Voltage)")
 twin.set_ylabel("Motor Speed")
 
-ax.legend(handles=[p1, p2, p3, p4, p5])
+plt.title("Sensor and Motor Commands over Time")
+ax.legend(handles=[p1, p2, p3, p4, p5], bbox_to_anchor=(1.05, 1.0), loc="upper left")
+plt.tight_layout()
 
 plt.show()
